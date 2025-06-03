@@ -1,12 +1,14 @@
-class invoice:
-    def __init__(self, id_number, total):
-        self.id_number = id_number
-        self.total = total
-        self.owed = total
-    @enhanced_printlog_for_method
-    def record_payment(self, amount):
-        self.owed = amount
+class countcalls:
+    def __init__(self, func):
+        self.func = func
+        self.count = 0
+    def __call__(self, *args, **kwargs):
+        self.count += 1
+        print(f"# of calls: {self.count}")
+        return self.func(*args, **kwargs)
 
-inv=invoice(42,1177.55)
-print(f"id or inv:{id(inv)}")
-inv.record_payment(55.35)
+@countcalls
+def foo(x):
+    return x+2
+foo(3)
+foo(4)
